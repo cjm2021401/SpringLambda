@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: demo-deployment
+  labels:
+    app: demo
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: demo
+  template:
+    metadata:
+      labels:
+        app: demo
+    spec:
+      serviceAccountName: mayf
+      containers:
+        - name: demo
+          image: 592247757306.dkr.ecr.ap-northeast-2.amazonaws.com/demo:latest
+          imagePullPolicy: Always
+          env:
+            - name: db-password
+              valueFrom:
+                secretKeyRef:
+                  name: demo-secret
+                  key: db-password
+
+          ports:
+            - containerPort: 8080
+
+
+
+

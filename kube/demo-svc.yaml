@@ -1,0 +1,17 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: demo-service
+  annotations:
+    service.beta.kubernetes.io/aws-load-balancer-type: "nlb"
+    service.beta.kubernetes.io/aws-load-balancer-backend-protocol: tcp
+    service.beta.kubernetes.io/aws-load-balancer-ssl-ports: "443"
+    service.beta.kubernetes.io/aws-load-balancer-ssl-cert: arn:aws:acm:ap-northeast-2:592247757306:certificate/8e10d6d4-20bb-41bb-bf51-e726d17f312c
+spec:
+  type: LoadBalancer
+  selector:
+    app: demo
+  ports:
+    - protocol: TCP
+      port: 443
+      targetPort: 8080
